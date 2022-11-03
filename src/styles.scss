@@ -9,6 +9,18 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
+.video-js .vjs-control-bar {
+  background-color: white !important ; 
+}
+
+.vjs-play-progress{
+  background-color: blue !important;
+}
+
+.vjs-play-control{
+  background-color: black !important;
+}
+
 /* Importing Bootstrap SCSS file. */
 @import '../node_modules/bootstrap/scss/bootstrap';
 
