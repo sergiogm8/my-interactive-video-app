@@ -6,19 +6,30 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  font-family: 'Montserrat', sans-serif !important;
 }
 
-.video-js .vjs-control-bar {
+.fm-video .vjs-control-bar {
   background-color: white !important ; 
+  color: #5600cc !important
 }
 
-.vjs-play-progress{
-  background-color: blue !important;
+.fm-video .vjs-play-progress{
+  background-color: #5300c3 !important;
 }
 
-.vjs-play-control{
-  background-color: black !important;
+.fm-video .vjs-slider,
+.fm-video .vjs-volume-level{
+  background-color: #320076 !important;
+}
+
+.video-js{
+  width: auto !important;
+  height: auto !important;
+}
+
+.vjs-modal-dialog-content .prueba-class{
+  background: blue;
 }
 
 /* Importing Bootstrap SCSS file. */
@@ -26,3 +37,6 @@ body {
 
 /* Importing Videojs SCSS file. */
 @import '../node_modules/video.js/src/css/video-js';
+
+/* Importing AppComponent SCSS file. */
+@import './app/app.component.scss';

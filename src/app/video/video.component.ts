@@ -1,26 +1,35 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import videojs from 'video.js';
+import videojs, { VideoJsPlayer, VideoJsPlayerOptions } from 'video.js';
+import { SabiasQueComponent } from '../sabias-que/sabias-que.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-video',
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.scss'],
 })
-export class VideoComponent implements OnInit, OnDestroy {
+export class VideoComponent implements OnInit, OnDestroy  {
   player?: videojs.Player;
-
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
 
   // Instantiate a Video.js player OnInit
   ngOnInit(): void {
     this.player = videojs('video', {
+      fluid: true,
       sources: [
         {
-          src: '../assets/video.mp4',
+          src: '../assets/que_es_un_pc.mp4',
           type: 'video/mp4',
         },
       ],
     });
+    
+    var CustomModal = videojs.getComponent('ModalDialog');
+    var myPlayer = this.player;
+    const myComponent = this.createComponent(myPlayer);
+    // videojs.registerComponent('SabiasQueComponent', SabiasQueComponent);
+
+
 
     // this.player.on('pause', () => {
     //   const contentEl = document.createElement('div');
@@ -49,13 +58,41 @@ export class VideoComponent implements OnInit, OnDestroy {
     //   });
     // });
 
-    var pauseTime = 10;
-    var myPlayer = this.player;
+
+    let lastStopped = 0;
     myPlayer.on('timeupdate', () => {
-      if (myPlayer.currentTime() >= pauseTime) {
-        myPlayer.pause();
-        pauseTime = Number(myPlayer.currentTime() + 999);
+      if (Math.floor(myPlayer.currentTime()) != lastStopped) {
+        if (Math.floor(myPlayer.currentTime()) === 10) {
+          
+          let botonInfo = document.createElement('div');
+          botonInfo.innerHTML = `<div> <button style="position: absolute; top: 0; background: blue;">A</button> </div>`;
+
+
+          myPlayer.el().appendChild(botonInfo);
+
+          //Contenido que tiene el botonInfo
+          var content = '<div class="prueba-class"><h1>hola</h1>s<p>que tal</p></div>';
+          myComponent.contentEl().innerHTML = content;
+          
+          var modal = new CustomModal(myPlayer, {
+            temporary: false,
+            content: myComponent.contentEl(),
+          });
+      
+          modal.createEl();
+          myPlayer.addChild(modal);
+          lastStopped = 10;
+          
+          botonInfo.lastElementChild?.addEventListener('click', () => {
+            modal.open();
+          });
+        }
       }
+
+      if (Math.floor(myPlayer.currentTime()) === 20) {
+        myPlayer.el().lastElementChild?.remove();
+      }
+
     });
   }
 
@@ -65,4 +102,15 @@ export class VideoComponent implements OnInit, OnDestroy {
       this.player.dispose();
     }
   }
+
+  createComponent(myPlayer: VideoJsPlayer): any {
+    var Component = videojs.getComponent('Component');
+    class SabiasQue extends Component {
+      constructor(player:VideoJsPlayer, options:VideoJsPlayerOptions) {
+        super(player, options);
+      }
+    }
+    return new SabiasQue(myPlayer, {});
+  }
 }
+

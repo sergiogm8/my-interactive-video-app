@@ -1,0 +1,25 @@
+.vertical-center {
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh; /* These two lines are counted as one :-)       */
+
+    display: flex;
+    align-items: center;
+}
+
+button {
+    text-decoration: none;
+    width: 270px;
+    background-color: #2e006e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    height: 80px;
+    transition: .3s;
+    border: none;
+}
+
+button:hover{
+    background-color: #6200f2;
+    transition: .3s;
+}
