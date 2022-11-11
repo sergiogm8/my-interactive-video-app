@@ -1,7 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import videojs, { VideoJsPlayer, VideoJsPlayerOptions } from 'video.js';
-import { SabiasQueComponent } from '../sabias-que/sabias-que.component';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-video',
@@ -10,9 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class VideoComponent implements OnInit, OnDestroy  {
   player?: videojs.Player;
-  constructor(public dialog: MatDialog) {}
+  constructor() {}
 
-  // Instantiate a Video.js player OnInit
   ngOnInit(): void {
     this.player = videojs('video', {
       fluid: true,
@@ -60,18 +57,37 @@ export class VideoComponent implements OnInit, OnDestroy  {
 
 
     let lastStopped = 0;
+    let botonInfo = document.createElement('div');
+    botonInfo.innerHTML = `
+    <div>
+      <button class="boton-info">
+        <h1>🤔¿Sabías que...?</h1>
+        <p>¡Hazme click!</p>
+      </button>
+    </div>`;
     myPlayer.on('timeupdate', () => {
       if (Math.floor(myPlayer.currentTime()) != lastStopped) {
         if (Math.floor(myPlayer.currentTime()) === 10) {
           
-          let botonInfo = document.createElement('div');
-          botonInfo.innerHTML = `<div> <button style="position: absolute; top: 0; background: blue;">A</button> </div>`;
-
-
           myPlayer.el().appendChild(botonInfo);
-
+          botonInfo.querySelector('.boton-info')?.animate([
+            { transform: 'scale(0)' },
+            { transform: 'scale(1.2)' },
+            { transform: 'scale(1)' }
+          ], {
+            duration: 500,
+            iterations: 1
+          });
           //Contenido que tiene el botonInfo
-          var content = '<div class="prueba-class"><h1>hola</h1>s<p>que tal</p></div>';
+          var content = `
+          <div class="container-wrapper">
+            <div class="contenedor">
+              <h1>Sabías que...</h1>
+              <p>El primer ordenador considerado como tal fue el Z1, diseñado y construido en 1938 por el ingeniero alemán
+              Konrad Zuse. Básicamente, era una calculadora binaria, mecánica que leía instrucciones de una cinta perforada.</p>
+              <img src="../assets/imgs/z1.jpg"/>
+            </div>
+          </div>`;
           myComponent.contentEl().innerHTML = content;
           
           var modal = new CustomModal(myPlayer, {
@@ -90,6 +106,13 @@ export class VideoComponent implements OnInit, OnDestroy  {
       }
 
       if (Math.floor(myPlayer.currentTime()) === 20) {
+        botonInfo?.querySelector('.boton-info')?.animate([
+          { transform: 'scale(1)' },
+          { transform: 'scale(0)' },
+        ], {
+          duration: 500,
+          iterations: 1
+        });
         myPlayer.el().lastElementChild?.remove();
       }
 
