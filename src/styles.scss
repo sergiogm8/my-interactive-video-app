@@ -48,12 +48,75 @@ body {
 
 .contenedor h1{
   font-weight: bold;
+  font-size: 32px;
+  text-align: center;
+}
+
+.contenedor h2 {
+  // font-weight: bold;
   font-size: 28px;
   text-align: center;
 }
 
 .contenedor p{
   font-size: 18px;
+}
+
+.contenedor .btn-container {
+  margin-top: 20px;
+  display: block;
+  justify-content: left;
+}
+
+.btn-container button {
+  // width: 300px !important;
+  font-size: 18px !important;
+  background: transparent !important;
+  overflow: hidden;
+  display: block;
+  position: relative;
+  z-index: 5;
+  transition: .3s all;
+  // color: white !important;
+  // justify-content: center !important;
+}
+
+
+.btn-container .btn-success{
+  background: #00c853 !important;
+  color: white !important;
+}
+
+.btn-container .btn-fail{
+  background: #d50000 !important;
+  color: white !important;
+}
+
+.btn-container .btn-default:after {
+  content: "";
+  background-color: #2e006e;
+  display: block;
+  height: 0;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transition: .3s;
+  width: 0;
+  z-index: -1;
+}
+
+.btn-container .btn-default:hover {
+  border-color: #42009e;
+  color: #FFFFFF;
+}
+
+.btn-container .btn-default:hover:after {
+  background-color: #42009e;
+  border-radius: 50%;
+  left: -50px;
+  top: -50px;
+  width: 500px;
+  height: 200px;
 }
 
 .vjs-modal-dialog-content .container-wrapper{
@@ -70,8 +133,8 @@ body {
   width: 250px;
   border-radius: 25px;
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 30px;
+  left: 30px;
   box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.6);
   padding: 10px;
   display: flex;
@@ -112,3 +175,6 @@ body {
 
 /* Importing AppComponent SCSS file. */
 @import './app/app.component.scss';
+
+/* Importing CoreUI SCSS file. */
+

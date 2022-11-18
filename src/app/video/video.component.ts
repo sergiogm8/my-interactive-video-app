@@ -68,18 +68,11 @@ export class VideoComponent implements OnInit, OnDestroy  {
     myPlayer.on('timeupdate', () => {
       if (Math.floor(myPlayer.currentTime()) != lastStopped) {
         if (Math.floor(myPlayer.currentTime()) === 10) {
+          lastStopped = 10;
+          this.showBotonInfo(myPlayer, botonInfo);
           
-          myPlayer.el().appendChild(botonInfo);
-          botonInfo.querySelector('.boton-info')?.animate([
-            { transform: 'scale(0)' },
-            { transform: 'scale(1.2)' },
-            { transform: 'scale(1)' }
-          ], {
-            duration: 500,
-            iterations: 1
-          });
-          //Contenido que tiene el botonInfo
-          var content = `
+          //Contenido del modal que despliega el botonInfo
+          let content = `
           <div class="container-wrapper">
             <div class="contenedor">
               <h1>Sabías que...</h1>
@@ -88,34 +81,113 @@ export class VideoComponent implements OnInit, OnDestroy  {
               <img src="../assets/imgs/z1.jpg"/>
             </div>
           </div>`;
-          myComponent.contentEl().innerHTML = content;
+          let modal = this.createModal(myPlayer, myComponent, CustomModal, content);
           
-          var modal = new CustomModal(myPlayer, {
-            temporary: false,
-            content: myComponent.contentEl(),
-          });
-      
-          modal.createEl();
-          myPlayer.addChild(modal);
-          lastStopped = 10;
-          
-          botonInfo.lastElementChild?.addEventListener('click', () => {
+          botonInfo.addEventListener('click', () => {
             modal.open();
           });
         }
-      }
 
-      if (Math.floor(myPlayer.currentTime()) === 20) {
-        botonInfo?.querySelector('.boton-info')?.animate([
-          { transform: 'scale(1)' },
-          { transform: 'scale(0)' },
-        ], {
-          duration: 500,
-          iterations: 1
-        });
-        myPlayer.el().lastElementChild?.remove();
-      }
+        if (Math.floor(myPlayer.currentTime()) === 20) {
+          this.removeBotonInfo(myPlayer, botonInfo);
+        }
 
+        if (Math.floor(myPlayer.currentTime()) === 42) {
+          let content = `
+          <div class="container-wrapper">
+            <div class="contenedor">
+              <h1>¡Pregunta sorpresa!</h1>
+                <h2>¿Sabes cómo se representa la información en un ordenador?</h2>
+                <div class="btn-container">
+                  <button id="1" class="btn btn-primary btn-default">a. Con ceros y unos (sistema binario)</button>
+                  <br/><br/>
+                  <button id="2" class="btn btn-primary btn-default">b. Con números (sistema decimal)</button>
+                  <br/><br/>
+                  <button id="3" class="btn btn-primary btn-default">c. Con letras y números (sistema alfanúmerico)</button>
+                </div>
+            </div>
+          </div>
+          `;
+          let correctAnswer = "1";
+          let questionModal = this.createModal(myPlayer, myComponent, CustomModal, content);
+          questionModal.open();
+          lastStopped = 42;
+          this.questionModalHandler(questionModal, correctAnswer);
+        }
+      }
+    });
+  }
+  questionModalHandler(questionModal: videojs.ModalDialog, correctAnswer: string) {
+    questionModal.contentEl().querySelectorAll('.btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        button.classList.remove('btn-default');
+        if (button.id === correctAnswer) {
+          this.correctAnswerHandler(button, questionModal);
+        } else {
+          this.wrongAnswerHandler(button, questionModal);
+        }
+      });
+    });
+  }
+
+  correctAnswerHandler(button: Element, questionModal: videojs.ModalDialog) {
+    button.classList.add('btn-success');
+    alert('¡Respuesta correcta!');
+    setTimeout(() => {
+      questionModal.close();
+    }, 1000);
+  }
+
+  wrongAnswerHandler(button: Element, questionModal: videojs.ModalDialog) {
+    button.classList.add('btn-fail');
+  }
+
+
+
+  removeBotonInfo( myPlayer: VideoJsPlayer, botonInfo: HTMLDivElement,) {
+    botonInfo?.querySelector('.boton-info')?.animate([
+      { transform: 'scale(1)' },
+      { transform: 'scale(0)' },
+    ], {
+      duration: 500,
+      iterations: 1
+    });
+    if (botonInfo != null) {
+      myPlayer.el().lastElementChild?.remove();
+    }
+  }
+
+  createModal(myPlayer: VideoJsPlayer, myComponent: any, CustomModal: { new(player: VideoJsPlayer, options?: videojs.ModalDialogOptions | undefined): videojs.ModalDialog; prototype: videojs.ModalDialog; }, content:string) {
+    // var content = `
+    //       <div class="container-wrapper">
+    //         <div class="contenedor">
+    //           <h1>Sabías que...</h1>
+    //           <p>El primer ordenador considerado como tal fue el Z1, diseñado y construido en 1938 por el ingeniero alemán
+    //           Konrad Zuse. Básicamente, era una calculadora binaria, mecánica que leía instrucciones de una cinta perforada.</p>
+    //           <img src="../assets/imgs/z1.jpg"/>
+    //         </div>
+    //       </div>`;
+    myComponent.contentEl().innerHTML = content;
+          
+    var modal = new CustomModal(myPlayer, {
+      temporary: false,
+      content: myComponent.contentEl(),
+    });
+
+    modal.createEl();
+    myPlayer.addChild(modal);
+    return modal;
+  }
+
+  showBotonInfo(myPlayer: VideoJsPlayer, botonInfo: HTMLDivElement) {
+    myPlayer.el().appendChild(botonInfo);
+    botonInfo.querySelector('.boton-info')?.animate([
+      { transform: 'scale(0)' },
+      { transform: 'scale(1.2)' },
+      { transform: 'scale(1)' }
+    ], {
+      duration: 500,
+      iterations: 1
     });
   }
 
