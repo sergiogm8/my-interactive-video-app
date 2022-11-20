@@ -9,6 +9,11 @@ body {
   font-family: 'Montserrat', sans-serif !important;
 }
 
+table{
+  font-family: 'Montserrat', sans-serif !important;
+
+}
+
 .fm-video .vjs-control-bar {
   background-color: white !important ; 
   color: #5600cc !important
@@ -28,22 +33,44 @@ body {
   height: auto !important;
 }
 
+.vjs-modal-dialog-content{
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.vjs-modal-dialog-content .container-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .vjs-modal-dialog-content .contenedor{
-  background: linear-gradient( 180deg, rgba(255,255,255,1) 0%, rgba(230,230,230,1) 60%,rgba(205,205,205,1) 100%) !important;
-  height: auto !important;
+  background: linear-gradient( 180deg, rgb(255, 255, 255) 0%, rgba(230,230,230,1) 60%,rgba(205,205,205,1) 100%) !important;
+  height: calc(100% + 200px) !important;
   width: 80% !important;
   border-radius: 20px;
   color: black;
-  padding: 30px;
+  padding: 60px;
   display: flex;
   flex-direction: column;
 }
 
-.contenedor img{
-  max-width: 350px;
-  max-height: 300px;
+.contenedor #z1{
+  max-width: 450px;
+  max-height: 400px;
   align-self: center;
   box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.6);
+  border-radius: 15px;
+  margin-top: 20px;
+  // transform: scale(1);
+  transition: .3s all
+
+}
+
+.contenedor #z1:hover {
+  transform: scale(1.5);
+  transition: .3s all
 }
 
 .contenedor h1{
@@ -52,15 +79,47 @@ body {
   text-align: center;
 }
 
-.contenedor h2 {
+.contenedor h2,
+.contenedor h2 a {
   // font-weight: bold;
   font-size: 28px;
   text-align: center;
 }
 
 .contenedor p{
-  font-size: 18px;
+  font-size: 20px;
+  margin-top: 20px;
 }
+
+.contenedor a{
+  font-size: 20px;
+  margin-top: 20px;
+  color: dodgerblue;
+}
+
+.contenedor table{
+  border: 1px solid black;
+  text-align: center;
+  font-size: 16px;
+}
+
+.contenedor table td{
+  border: 1px solid black;
+  text-align: center;
+  width: 300px;
+}
+
+.contenedor table th{
+  border: 1px solid black;
+  text-align: center;
+  width: 300px;
+}
+
+.contenedor table img{
+  width: 100%;
+  height: auto;
+}
+
 
 .contenedor .btn-container {
   margin-top: 20px;
@@ -77,6 +136,8 @@ body {
   position: relative;
   z-index: 5;
   transition: .3s all;
+  max-width: 500px;
+  text-align: left;
   // color: white !important;
   // justify-content: center !important;
 }
@@ -115,15 +176,9 @@ body {
   border-radius: 50%;
   left: -50px;
   top: -50px;
-  width: 500px;
+  width: 800px;
   height: 200px;
 }
-
-.vjs-modal-dialog-content .container-wrapper{
-  display: flex;
-  justify-content: center;
-}
-
 
 .boton-info {
   // background: rgb(255,255,255);
