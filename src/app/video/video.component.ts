@@ -64,7 +64,7 @@ export class VideoComponent implements OnInit, OnDestroy {
           });
         }
 
-        if (Math.floor(myPlayer.currentTime()) === 20) {
+        if (Math.floor(myPlayer.currentTime()) >= 20) {
           lastStopped = 20;
           this.removeBotonInfo(myPlayer, botonInfo);
         }
@@ -147,7 +147,7 @@ export class VideoComponent implements OnInit, OnDestroy {
         
         }
 
-        if (Math.floor(myPlayer.currentTime()) === 135) {
+        if (Math.floor(myPlayer.currentTime()) >= 135) {
           lastStopped = 135;
           this.removeBotonInfo(myPlayer, botonInfo);
         }
