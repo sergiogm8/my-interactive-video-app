@@ -8,7 +8,7 @@ import videojs, { VideoJsPlayer, VideoJsPlayerOptions } from 'video.js';
 })
 export class VideoComponent implements OnInit, OnDestroy {
   player?: videojs.Player;
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.player = videojs('video', {
@@ -27,6 +27,7 @@ export class VideoComponent implements OnInit, OnDestroy {
 
     let lastStopped = 0;
     let botonInfo = document.createElement('div');
+    let modal: videojs.ModalDialog;
     botonInfo.innerHTML = `
     <div>
       <button class="boton-info">
@@ -52,7 +53,7 @@ export class VideoComponent implements OnInit, OnDestroy {
               <img id="z1" src="../assets/imgs/z1.jpg"/>
             </div>
           </div>`;
-          let modal = this.createModal(
+            modal = this.createModal(
             myPlayer,
             myComponent,
             CustomModal,
@@ -66,7 +67,7 @@ export class VideoComponent implements OnInit, OnDestroy {
 
         if (Math.floor(myPlayer.currentTime()) === 20) {
           lastStopped = 20;
-          this.removeBotonInfo(myPlayer, botonInfo);
+          this.removeBotonInfo(myPlayer, botonInfo, modal);
         }
 
         if (Math.floor(myPlayer.currentTime()) === 42) {
@@ -100,7 +101,7 @@ export class VideoComponent implements OnInit, OnDestroy {
         if (Math.floor(myPlayer.currentTime()) === 128) {
           lastStopped = 128;
           this.showBotonInfo(myPlayer, botonInfo);
-          
+
           let content = `
             <div class="container-wrapper">
               <div class="contenedor">
@@ -133,7 +134,7 @@ export class VideoComponent implements OnInit, OnDestroy {
               </div>
             </div>
           `;
-          let modal = this.createModal(
+          modal = this.createModal(
             myPlayer,
             myComponent,
             CustomModal,
@@ -144,12 +145,12 @@ export class VideoComponent implements OnInit, OnDestroy {
             modal.open();
           });
 
-        
+
         }
 
         if (Math.floor(myPlayer.currentTime()) === 135) {
           lastStopped = 135;
-          this.removeBotonInfo(myPlayer, botonInfo);
+          this.removeBotonInfo(myPlayer, botonInfo, modal);
         }
 
         if (Math.floor(myPlayer.currentTime()) === 202) {
@@ -228,7 +229,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     //   });
   }
 
-  questionModalHandler(questionModal: videojs.ModalDialog,correctAnswer: string) {
+  questionModalHandler(questionModal: videojs.ModalDialog, correctAnswer: string) {
     questionModal
       .contentEl()
       .querySelectorAll('.btn')
@@ -256,7 +257,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     button.classList.add('btn-fail');
   }
 
-  removeBotonInfo(myPlayer: VideoJsPlayer, botonInfo: HTMLDivElement) {
+  removeBotonInfo(myPlayer: VideoJsPlayer, botonInfo: HTMLDivElement, modal: videojs.ModalDialog) {
     botonInfo
       ?.querySelector('.boton-info')
       ?.animate(
@@ -270,17 +271,19 @@ export class VideoComponent implements OnInit, OnDestroy {
         }
       );
     setTimeout(() => {
-      myPlayer.el().querySelector('.boton-info')?.remove();
+      myPlayer.el().removeChild(botonInfo);
+      myPlayer.removeChild(modal);
+      
     }, 500);
 
-      
+
   }
 
   createModal(
     myPlayer: VideoJsPlayer,
     myComponent: any,
     CustomModal: {
-      new (
+      new(
         player: VideoJsPlayer,
         options?: videojs.ModalDialogOptions | undefined
       ): videojs.ModalDialog;
