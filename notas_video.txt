@@ -14,4 +14,8 @@
 
 4:32 -> pregunta sobre señal analógica y digital✅
 
-4:46 -> informacion sobre los puertos usb, serial y paralelos
+4:46 -> informacion sobre los puertos video, usb, audio, serial y paralelo
+
+Poner los creditos del video por algun lado
+
+estadisticas al final del video

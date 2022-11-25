@@ -36,7 +36,6 @@ table{
 .vjs-modal-dialog-content{
   display: flex !important;
   justify-content: center !important;
-  align-items: center !important;
 }
 
 .vjs-modal-dialog-content .container-wrapper{
@@ -54,6 +53,7 @@ table{
   padding: 60px;
   display: flex;
   flex-direction: column;
+  // overflow: auto !important;
 }
 
 .contenedor #z1{
@@ -68,7 +68,7 @@ table{
 
 }
 
-.contenedor #z1:hover {
+.contenedor img:hover {
   transform: scale(1.5);
   transition: .3s all
 }
@@ -120,6 +120,33 @@ table{
   height: auto;
 }
 
+.contenedor .puerto-container{
+  margin-top: 30px;
+  display: flex;
+  gap: 30px;
+}
+
+.puerto-container .puerto-img{
+  display: flex;
+  gap: 10px;
+}
+
+.puerto-img img{
+  max-width: 250px;
+  max-height: auto;
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.6);
+  border-radius: 15px;
+  transition: .3s all;
+}
+
+.puerto-container .puerto-info{
+  display: flex;
+  flex-direction: column;
+}
+
+.puerto-info h4{
+  text-align: center;
+}
 
 .contenedor .btn-container {
   margin-top: 20px;

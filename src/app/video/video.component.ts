@@ -19,6 +19,7 @@ export class VideoComponent implements OnInit, OnDestroy {
           type: 'video/mp4',
         },
       ],
+      poster: '../assets/imgs/poster.png',
     });
 
     var CustomModal = videojs.getComponent('ModalDialog');
@@ -42,7 +43,6 @@ export class VideoComponent implements OnInit, OnDestroy {
         if (Math.floor(myPlayer.currentTime()) === 10) {
           lastStopped = 10;
           this.showBotonInfo(myPlayer, botonInfo);
-
           //Contenido del modal que despliega el botonInfo
           let content = `
           <div class="container-wrapper">
@@ -130,7 +130,6 @@ export class VideoComponent implements OnInit, OnDestroy {
                     <td><img src="../assets/imgs/mainframe.jfif"/></td>
                   </tr>
                 </table>
-                
               </div>
             </div>
           `;
@@ -213,6 +212,54 @@ export class VideoComponent implements OnInit, OnDestroy {
           lastStopped = 273;
           this.questionModalHandler(questionModal, correctAnswer);
         }
+
+        if (Math.floor(myPlayer.currentTime()) === 286) {
+          lastStopped = 286;
+          this.showBotonInfo(myPlayer, botonInfo);
+
+          let content = `
+            <div class="container-wrapper">
+              <div class="contenedor">
+                <h1>Sabías que...</h1>
+                <h2>Tipos de puertos para periféricos</h2>
+                <div class="puerto-container">
+                  <div class="puerto-img">
+                    <img src="../assets/imgs/usb-a.jpg"/>
+                    <img src="../assets/imgs/usb-c.jpg" />
+                  </div>
+                  <div class="puerto-info">
+                    <h4><strong>Puertos USB</strong></h4>
+                    <p>Actualmente, los puertos USB se usan para conectar todo tipo de periféricos, ya que son capaces de transmitir datos, video y audio. Un ordenador de hoy puede traer puertos <a target="_blank" href="https://es.wikipedia.org/wiki/Universal_Serial_Bus">USB-A</a> y <a target="_blank" href="https://es.wikipedia.org/wiki/USB-C">USB-C</a></p>
+                  </div>
+                </div>
+                <br/>
+                <hr/>
+                <br/>
+                <div class="puerto-container">
+                  <div class="puerto-info">
+                    <h4><strong>Puertos de vídeo</strong></h4>
+                    <p>Para conectar monitores y televisiones al ordenador hay 4 tipos de puertos. Aunque se ven cada vez menos, los ordenadores de escritorio siguen trayendo los conectores de pines VGA y DVI. Los actuales son Display Port y HDMI</p>
+                  </div>
+                  <div class="puerto-img">
+                    <img src="../assets/imgs/vga.jfif"/>
+                    <img src="../assets/imgs/hdmi.jpg" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+          modal = this.createModal(
+            myPlayer,
+            myComponent,
+            CustomModal,
+            content
+          );
+
+          botonInfo.addEventListener('click', () => {
+            modal.open();
+          });
+        }
+
       }
     });
   }
