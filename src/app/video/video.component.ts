@@ -238,11 +238,24 @@ export class VideoComponent implements OnInit, OnDestroy {
                 <div class="puerto-container">
                   <div class="puerto-info">
                     <h4><strong>Puertos de vídeo</strong></h4>
-                    <p>Para conectar monitores y televisiones al ordenador hay 4 tipos de puertos. Aunque se ven cada vez menos, los ordenadores de escritorio siguen trayendo los conectores de pines VGA y DVI. Los actuales son Display Port y HDMI</p>
+                    <p>Para conectar monitores y televisiones al ordenador hay 4 tipos de puertos. Aunque se ven cada vez menos, los ordenadores de escritorio siguen trayendo los conectores de pines <a target="_blank" href="https://es.wikipedia.org/wiki/Video_Graphics_Array">VGA</a> y <a target="_blank" href="https://es.wikipedia.org/wiki/Digital_Visual_Interface">DVI</a>. Los actuales son <a target="_blank" href="https://es.wikipedia.org/wiki/DisplayPort">Display Port</a> y <a target="_blank" href="https://es.wikipedia.org/wiki/High-Definition_Multimedia_Interface">HDMI</a>, que también transmiten audio.</p>
                   </div>
                   <div class="puerto-img">
                     <img src="../assets/imgs/vga.jfif"/>
                     <img src="../assets/imgs/hdmi.jpg" />
+                  </div>
+                </div>
+                <br/>
+                <hr/>
+                <br/>
+                <div class="puerto-container">
+                  <div class="puerto-img">
+                    <img src="../assets/imgs/puertos-audio.png"/>
+                    <img src="../assets/imgs/jack.png" />
+                  </div>
+                  <div class="puerto-info">
+                    <h4><strong>Puertos de audio</strong></h4>
+                    <p>En los ordenadores convencionales de sobremesa, hay 3 puertos <a target="_blank" href="https://es.wikipedia.org/wiki/Conector_de_audio_anal%C3%B3gico">Jack 3,5mm</a>: entrada de micrófono en mono, entrada de audio en estéreo y salida de audio. En los portátiles hay uno que permite entrada y salida de audio simultáneamente.</p>
                   </div>
                 </div>
               </div>
