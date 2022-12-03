@@ -8,10 +8,11 @@ import videojs, { VideoJsPlayer, VideoJsPlayerOptions } from 'video.js';
 })
 export class VideoComponent implements OnInit, OnDestroy {
   player?: videojs.Player;
+  videoEnded?: boolean = false;
   constructor() { }
 
   ngOnInit(): void {
-    this.player = videojs('video', {
+    this.player =  videojs('video', {
       fluid: true,
       sources: [
         {
@@ -37,28 +38,36 @@ export class VideoComponent implements OnInit, OnDestroy {
       </button>
     </div>`;
 
+    let raspberryBtn = document.createElement('div');
+    raspberryBtn.innerHTML = `
+    <div>
+      <button class="raspberry-btn">
+        <img src="../assets/imgs/raspberry.png"/>
+      </button>
+    </div>`;
+
+    myPlayer.on('play', () => {
+      myPlayer.requestFullscreen();
+    });
+
     myPlayer.on('timeupdate', () => {
       if (Math.floor(myPlayer.currentTime()) != lastStopped) {
 
         if (Math.floor(myPlayer.currentTime()) === 10) {
           lastStopped = 10;
-          this.showBotonInfo(myPlayer, botonInfo);
+          this.showBoton(myPlayer, botonInfo, '.boton-info');
           //Contenido del modal que despliega el botonInfo
           let content = `
-          <div class="container-wrapper">
-            <div class="contenedor">
-              <h1>Sabías que...</h1>
-              <p>El primer ordenador considerado como tal fue el <a target="_blank" href="https://es.wikipedia.org/wiki/Z1">Z1</a>, diseñado y construido en 1938 por el ingeniero alemán
-              <a target="_blank" href="https://es.wikipedia.org/wiki/Konrad_Zuse">Konrad Zuse</a>. Básicamente, era una calculadora binaria, mecánica que leía instrucciones de una cinta perforada.</p>
-              <img id="z1" src="../assets/imgs/z1.jpg"/>
+            <div class="container-wrapper">
+              <div class="contenedor">
+                <h1>Sabías que...</h1>
+                <p>El primer ordenador considerado como tal fue el <a target="_blank" href="https://es.wikipedia.org/wiki/Z1">Z1</a>, diseñado y construido en 1938 por el ingeniero alemán
+                <a target="_blank" href="https://es.wikipedia.org/wiki/Konrad_Zuse">Konrad Zuse</a>. Básicamente, era una calculadora binaria, mecánica que leía instrucciones de una cinta perforada.</p>
+                <img id="z1" src="../assets/imgs/z1.jpg"/>
+              </div>
             </div>
-          </div>`;
-            modal = this.createModal(
-            myPlayer,
-            myComponent,
-            CustomModal,
-            content
-          );
+            `;
+          modal = this.createModal(myPlayer, myComponent, CustomModal, content);
 
           botonInfo.addEventListener('click', () => {
             modal.open();
@@ -67,7 +76,7 @@ export class VideoComponent implements OnInit, OnDestroy {
 
         if (Math.floor(myPlayer.currentTime()) === 20) {
           lastStopped = 20;
-          this.removeBotonInfo(myPlayer, botonInfo, modal);
+          this.removeBoton(myPlayer, botonInfo, modal, '.boton-info');
         }
 
         if (Math.floor(myPlayer.currentTime()) === 42) {
@@ -93,6 +102,7 @@ export class VideoComponent implements OnInit, OnDestroy {
             CustomModal,
             content
           );
+          questionModal.addClass('question-modal');
           questionModal.open();
           lastStopped = 42;
           this.questionModalHandler(questionModal, correctAnswer);
@@ -100,7 +110,7 @@ export class VideoComponent implements OnInit, OnDestroy {
 
         if (Math.floor(myPlayer.currentTime()) === 128) {
           lastStopped = 128;
-          this.showBotonInfo(myPlayer, botonInfo);
+          this.showBoton(myPlayer, botonInfo, '.boton-info');
 
           let content = `
             <div class="container-wrapper">
@@ -143,14 +153,45 @@ export class VideoComponent implements OnInit, OnDestroy {
           botonInfo.addEventListener('click', () => {
             modal.open();
           });
-
-
         }
 
         if (Math.floor(myPlayer.currentTime()) === 135) {
           lastStopped = 135;
-          this.removeBotonInfo(myPlayer, botonInfo, modal);
+          this.removeBoton(myPlayer, botonInfo, modal, '.boton-info');
         }
+
+        if (Math.floor(myPlayer.currentTime()) === 140) {
+          lastStopped = 140;
+          this.showBoton(myPlayer, raspberryBtn, '.raspberry-btn');
+          let content = 
+          `
+          <div class="container-wrapper">
+            <div class="contenedor">
+              <h1>Sabías que...</h1>
+              <h2><a target="_blank" href="https://www.raspberrypi.com/">Raspberry PI</a></h2>
+              <div class="horizontal-container">
+                <div class="img">
+                  <img src="../assets/imgs/raspberry.jpg"/>
+                </div>
+                <div class="info">
+                  <p>La Raspberry PI es un ordenador de placa única, de bajo coste, que se utiliza para proyectos de electrónica, robótica, en la educación o incluso a nivel particular. Se pueden realizar infinidad de cosas con ella gracias a su versatilidad y los acesorios disponibles.</p>
+                  <p>Se puede usar para la domotización de viviendas, como servidor NAS, servidor web, como un PC, consola retro, y un largo etc. </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          `;
+          modal = this.createModal(myPlayer, myComponent, CustomModal, content);
+          raspberryBtn.addEventListener('click', () => {
+            modal.open();
+          });
+        }
+
+        if (Math.floor(myPlayer.currentTime()) === 146) {
+          lastStopped = 146;
+          this.removeBoton(myPlayer, raspberryBtn, modal, '.raspberry-btn');
+        }
+
 
         if (Math.floor(myPlayer.currentTime()) === 202) {
           let content = `
@@ -178,7 +219,8 @@ export class VideoComponent implements OnInit, OnDestroy {
             content
           );
           lastStopped = 202;
-          this.showQuestionModal(questionModal);
+          questionModal.addClass('question-modal');
+          questionModal.open();
           this.questionModalHandler(questionModal, correctAnswer);
         }
 
@@ -208,6 +250,7 @@ export class VideoComponent implements OnInit, OnDestroy {
             CustomModal,
             content
           );
+          questionModal.addClass('question-modal');
           questionModal.open();
           lastStopped = 273;
           this.questionModalHandler(questionModal, correctAnswer);
@@ -215,19 +258,19 @@ export class VideoComponent implements OnInit, OnDestroy {
 
         if (Math.floor(myPlayer.currentTime()) === 286) {
           lastStopped = 286;
-          this.showBotonInfo(myPlayer, botonInfo);
+          this.showBoton(myPlayer, botonInfo, '.boton-info');
 
           let content = `
             <div class="container-wrapper">
               <div class="contenedor">
                 <h1>Sabías que...</h1>
                 <h2>Tipos de puertos para periféricos</h2>
-                <div class="puerto-container">
-                  <div class="puerto-img">
+                <div class="horizontal-container">
+                  <div class="img">
                     <img src="../assets/imgs/usb-a.jpg"/>
                     <img src="../assets/imgs/usb-c.jpg" />
                   </div>
-                  <div class="puerto-info">
+                  <div class="info">
                     <h4><strong>Puertos USB</strong></h4>
                     <p>Actualmente, los puertos USB se usan para conectar todo tipo de periféricos, ya que son capaces de transmitir datos, video y audio. Un ordenador de hoy puede traer puertos <a target="_blank" href="https://es.wikipedia.org/wiki/Universal_Serial_Bus">USB-A</a> y <a target="_blank" href="https://es.wikipedia.org/wiki/USB-C">USB-C</a></p>
                   </div>
@@ -235,12 +278,12 @@ export class VideoComponent implements OnInit, OnDestroy {
                 <br/>
                 <hr/>
                 <br/>
-                <div class="puerto-container">
-                  <div class="puerto-info">
+                <div class="horizontal-container">
+                  <div class="info">
                     <h4><strong>Puertos de vídeo</strong></h4>
                     <p>Para conectar monitores y televisiones al ordenador hay 4 tipos de puertos. Aunque se ven cada vez menos, los ordenadores de escritorio siguen trayendo los conectores de pines <a target="_blank" href="https://es.wikipedia.org/wiki/Video_Graphics_Array">VGA</a> y <a target="_blank" href="https://es.wikipedia.org/wiki/Digital_Visual_Interface">DVI</a>. Los actuales son <a target="_blank" href="https://es.wikipedia.org/wiki/DisplayPort">Display Port</a> y <a target="_blank" href="https://es.wikipedia.org/wiki/High-Definition_Multimedia_Interface">HDMI</a>, que también transmiten audio.</p>
                   </div>
-                  <div class="puerto-img">
+                  <div class="img">
                     <img src="../assets/imgs/vga.jfif"/>
                     <img src="../assets/imgs/hdmi.jpg" />
                   </div>
@@ -248,12 +291,12 @@ export class VideoComponent implements OnInit, OnDestroy {
                 <br/>
                 <hr/>
                 <br/>
-                <div class="puerto-container">
-                  <div class="puerto-img">
+                <div class="horizontal-container">
+                  <div class="img">
                     <img src="../assets/imgs/puertos-audio.png"/>
                     <img src="../assets/imgs/jack.png" />
                   </div>
-                  <div class="puerto-info">
+                  <div class="info">
                     <h4><strong>Puertos de audio</strong></h4>
                     <p>En los ordenadores convencionales de sobremesa, hay 3 puertos <a target="_blank" href="https://es.wikipedia.org/wiki/Conector_de_audio_anal%C3%B3gico">Jack 3,5mm</a>: entrada de micrófono en mono, entrada de audio en estéreo y salida de audio. En los portátiles hay uno que permite entrada y salida de audio simultáneamente.</p>
                   </div>
@@ -273,20 +316,103 @@ export class VideoComponent implements OnInit, OnDestroy {
           });
         }
 
+        if (Math.floor(myPlayer.currentTime()) === 208) {
+          lastStopped = 208;
+          let placaBaseImg = document.createElement('div');
+          placaBaseImg.innerHTML = `
+          <div class="img-componente placa-base">
+            <img class="img-componente-size" src="../assets/imgs/placa-base.png"/>
+          </div>`;
+          this.showImage(myPlayer, placaBaseImg, '.placa-base');
+        }
+
+        if (Math.floor(myPlayer.currentTime()) === 218) {
+          lastStopped = 218;
+          let procesadorImg = document.createElement('div');
+          procesadorImg.innerHTML = `
+          <div class="img-componente procesador">
+            <img class="img-componente-size" id="img-procesador" src="../assets/imgs/procesador.png"/>
+          </div>`;
+          this.showImage(myPlayer, procesadorImg, '.procesador');
+        }
+
+        if (Math.floor(myPlayer.currentTime()) === 228) {
+          lastStopped = 228;
+          let fuenteImg = document.createElement('div');
+          fuenteImg.innerHTML = `
+          <div class="img-componente fuente">
+            <img class="img-componente-size" src="../assets/imgs/fuente.png"/>
+          </div>`;
+          this.showImage(myPlayer, fuenteImg, '.fuente');
+        }
+
+        if (Math.floor(myPlayer.currentTime()) === 233) {
+          lastStopped = 233;
+          let ramImg = document.createElement('div');
+          ramImg.innerHTML = `
+          <div class="img-componente ram">
+            <img class="img-componente-size" src="../assets/imgs/ram.png"/>
+          </div>`;
+          this.showImage(myPlayer, ramImg, '.ram');
+        }
+
+        if (Math.floor(myPlayer.currentTime()) === 240) {
+          lastStopped = 240;
+          let discoImg = document.createElement('div');
+          discoImg.innerHTML = `
+          <div class="img-componente disco">
+            <img class="img-componente-size" src="../assets/imgs/disco-duro.png"/>
+          </div>`;
+          this.showImage(myPlayer, discoImg, '.disco');
+        }
+
+        if (Math.floor(myPlayer.currentTime()) === 256) {
+          lastStopped = 256;
+
+          myPlayer.el().querySelectorAll('.img-componente').forEach((element) => {
+            this.removeImage(element, myPlayer);
+          });
+        }
       }
     });
+
+    myPlayer.on('ended', () => {
+      this.videoEnded = true;
+      
+    });
+
+  }
+  removeImage(element: Element, myPlayer: VideoJsPlayer) {
+    element.animate(
+      [
+        { transform: 'scale(1)' },
+        { transform: 'scale(0)' },
+      ],
+      {
+        duration: 500,
+        iterations: 1,
+      }
+    );
+    setTimeout(() => {
+      myPlayer.el().removeChild(element.parentNode as Node);
+    }, 500);
   }
 
-  showQuestionModal(questionModal: videojs.ModalDialog) {
-    questionModal.open();
-    // asi, no funciona
-    // questionModal
-    //   .contentEl()
-    //   .querySelector('.container-wrapper')
-    //   ?.animate([{ transform: 'scale(0)' }, { transform: 'scale(1)' }], {
-    //     duration: 500,
-    //     iterations: 1,
-    //   });
+  showImage(myPlayer: VideoJsPlayer, img: HTMLDivElement, className: string) {
+    myPlayer.el().appendChild(img);
+    img
+      .querySelector(className)
+      ?.animate(
+        [
+          { transform: 'scale(0)' },
+          { transform: 'scale(1.2)' },
+          { transform: 'scale(1)' },
+        ],
+        {
+          duration: 500,
+          iterations: 1,
+        }
+      );
   }
 
   questionModalHandler(questionModal: videojs.ModalDialog, correctAnswer: string) {
@@ -317,9 +443,9 @@ export class VideoComponent implements OnInit, OnDestroy {
     button.classList.add('btn-fail');
   }
 
-  removeBotonInfo(myPlayer: VideoJsPlayer, botonInfo: HTMLDivElement, modal: videojs.ModalDialog) {
-    botonInfo
-      ?.querySelector('.boton-info')
+  removeBoton(myPlayer: VideoJsPlayer, boton: HTMLDivElement, modal: videojs.ModalDialog, className: string) {
+    boton
+      ?.querySelector(className)
       ?.animate(
         [
           { transform: 'scale(1)' },
@@ -331,11 +457,9 @@ export class VideoComponent implements OnInit, OnDestroy {
         }
       );
     setTimeout(() => {
-      myPlayer.el().removeChild(botonInfo);
+      myPlayer.el().removeChild(boton);
       myPlayer.removeChild(modal);
-      
     }, 500);
-
 
   }
 
@@ -349,17 +473,9 @@ export class VideoComponent implements OnInit, OnDestroy {
       ): videojs.ModalDialog;
       prototype: videojs.ModalDialog;
     },
-    content: string
+    content: string,
   ) {
-    // var content = `
-    //       <div class="container-wrapper">
-    //         <div class="contenedor">
-    //           <h1>Sabías que...</h1>
-    //           <p>El primer ordenador considerado como tal fue el Z1, diseñado y construido en 1938 por el ingeniero alemán
-    //           Konrad Zuse. Básicamente, era una calculadora binaria, mecánica que leía instrucciones de una cinta perforada.</p>
-    //           <img src="../assets/imgs/z1.jpg"/>
-    //         </div>
-    //       </div>`;
+
     myComponent.contentEl().innerHTML = content;
 
     var modal = new CustomModal(myPlayer, {
@@ -372,10 +488,10 @@ export class VideoComponent implements OnInit, OnDestroy {
     return modal;
   }
 
-  showBotonInfo(myPlayer: VideoJsPlayer, botonInfo: HTMLDivElement) {
-    myPlayer.el().appendChild(botonInfo);
-    botonInfo
-      .querySelector('.boton-info')
+  showBoton(myPlayer: VideoJsPlayer, boton: HTMLDivElement, className: string) {
+    myPlayer.el().appendChild(boton);
+    boton
+      .querySelector(className)
       ?.animate(
         [
           { transform: 'scale(0)' },

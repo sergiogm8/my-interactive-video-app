@@ -44,6 +44,10 @@ table{
   align-items: center;
 }
 
+.question-modal .vjs-close-button{
+  display: none !important;
+}
+
 .vjs-modal-dialog-content .contenedor{
   background: linear-gradient( 180deg, rgb(255, 255, 255) 0%, rgba(230,230,230,1) 60%,rgba(205,205,205,1) 100%) !important;
   height: calc(100% + 200px) !important;
@@ -68,7 +72,7 @@ table{
 
 }
 
-.contenedor img:hover {
+img:hover {
   transform: scale(1.5);
   transition: .3s all
 }
@@ -120,31 +124,31 @@ table{
   height: auto;
 }
 
-.contenedor .puerto-container{
+.contenedor .horizontal-container{
   margin-top: 30px;
   display: flex;
   gap: 30px;
 }
 
-.puerto-container .puerto-img{
+.horizontal-container .img{
   display: flex;
   gap: 10px;
 }
 
-.puerto-img img{
-  max-width: 250px;
-  max-height: auto;
+.img img{
+  max-width: 12rem;
+  max-height: 10rem;
   box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.6);
   border-radius: 15px;
   transition: .3s all;
 }
 
-.puerto-container .puerto-info{
+.horizontal-container .info{
   display: flex;
   flex-direction: column;
 }
 
-.puerto-info h4{
+.info h4{
   text-align: center;
 }
 
@@ -238,6 +242,60 @@ table{
 .boton-info:hover {
   transform: scale(1.2);
   transition: .3s;
+}
+
+.video-js .raspberry-btn {
+  position: absolute;
+  top: 25%;
+  left: 33%;
+}
+
+.raspberry-btn img{
+  width: 450px;
+  height: 400px;
+  transition: .3s all;
+}
+
+.img-componente{
+  position: absolute;
+}
+
+.img-componente img{
+  transition: .3s all;
+}
+
+.img-componente-size {
+  max-width: 18rem;
+  max-height: 15rem;
+}
+
+.placa-base{
+  top: 150px;
+  left: 240px;
+}
+
+.procesador {
+  top: 140px;
+  left: 640px;
+}
+#img-procesador{
+  width: 15rem;
+  height: 12rem
+}
+
+.fuente {
+  top: 140px;
+  left: 1100px;
+}
+
+.ram{
+  top: 530px;
+  left: 1100px;
+}
+
+.disco {
+  top: 520px;
+  left: 210px;
 }
 
 

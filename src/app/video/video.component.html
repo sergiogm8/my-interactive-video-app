@@ -1,7 +1,10 @@
 <div class="wrapper">
-    <div class="video-container" id="video-container">
-        <video id="video" class="video-js vjs-big-play-centered fm-video vjs-play-progress vjs-control" data-setup="{}" controls>
+    <div class="video-container" id="video-container" >
+        <video id="video" class="video-js vjs-big-play-centered fm-video vjs-play-progress vjs-control" data-setup="{}" controls muted>
         </video>
+    </div>
+    <div class="statistics" *ngIf="videoEnded === true">
+        <p>El vídeo ha terminado</p>
     </div>
 </div>
 
