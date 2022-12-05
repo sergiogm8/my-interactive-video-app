@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'my-interactive-video-app';
+  correctAnswers: number = 0;
 }

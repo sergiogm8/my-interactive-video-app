@@ -1,0 +1,17 @@
+<div class="content-wrapper">
+    <div class="header">
+        <h1>Estadísticas de visualización</h1>
+    </div>
+    <div class="container">
+        <div class="information info-clicks">
+            <p>Clicks en componentes que muestran información extra: <strong>{{ infoClicks }}</strong></p>
+        </div>
+        <div class="information respuestas-correctas">
+            <p>Preguntas correctas a la primera: <strong>{{ correctAnswers }}</strong></p>
+        </div>
+        <div class="puntuacion">
+            <h3>Puntuación:</h3>
+            <rating id="rating" style="color: #ffe436;font-size: 50px;" [max]="max" [readonly]="isReadOnly" [(ngModel)]="rate" ></rating>
+        </div>
+    </div>
+</div>

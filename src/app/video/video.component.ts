@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import videojs, { VideoJsPlayer, VideoJsPlayerOptions } from 'video.js';
+import {Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-video',
@@ -9,7 +11,12 @@ import videojs, { VideoJsPlayer, VideoJsPlayerOptions } from 'video.js';
 export class VideoComponent implements OnInit, OnDestroy {
   player?: videojs.Player;
   videoEnded?: boolean = false;
-  constructor() { }
+  correctAnswers: number = 0;
+  infoClicks: number = 0;
+
+  constructor(public router: Router) { 
+    sessionStorage.clear();
+  }
 
   ngOnInit(): void {
     this.player =  videojs('video', {
@@ -70,6 +77,8 @@ export class VideoComponent implements OnInit, OnDestroy {
           modal = this.createModal(myPlayer, myComponent, CustomModal, content);
 
           botonInfo.addEventListener('click', () => {
+            this.infoClicks++;
+            console.log(this.infoClicks);
             modal.open();
           });
         }
@@ -151,6 +160,8 @@ export class VideoComponent implements OnInit, OnDestroy {
           );
 
           botonInfo.addEventListener('click', () => {
+            this.infoClicks++;
+            console.log(this.infoClicks);
             modal.open();
           });
         }
@@ -183,6 +194,8 @@ export class VideoComponent implements OnInit, OnDestroy {
           `;
           modal = this.createModal(myPlayer, myComponent, CustomModal, content);
           raspberryBtn.addEventListener('click', () => {
+            this.infoClicks++;
+            console.log(this.infoClicks);
             modal.open();
           });
         }
@@ -191,7 +204,6 @@ export class VideoComponent implements OnInit, OnDestroy {
           lastStopped = 146;
           this.removeBoton(myPlayer, raspberryBtn, modal, '.raspberry-btn');
         }
-
 
         if (Math.floor(myPlayer.currentTime()) === 202) {
           let content = `
@@ -256,8 +268,8 @@ export class VideoComponent implements OnInit, OnDestroy {
           this.questionModalHandler(questionModal, correctAnswer);
         }
 
-        if (Math.floor(myPlayer.currentTime()) === 286) {
-          lastStopped = 286;
+        if (Math.floor(myPlayer.currentTime()) === 284) {
+          lastStopped = 284;
           this.showBoton(myPlayer, botonInfo, '.boton-info');
 
           let content = `
@@ -312,9 +324,17 @@ export class VideoComponent implements OnInit, OnDestroy {
           );
 
           botonInfo.addEventListener('click', () => {
+            this.infoClicks++;
+            console.log(this.infoClicks);
             modal.open();
           });
         }
+
+        if (Math.floor(myPlayer.currentTime()) === 292) {
+          lastStopped = 292;
+          this.removeBoton(myPlayer, botonInfo, modal, '.boton-info');
+        }
+
 
         if (Math.floor(myPlayer.currentTime()) === 208) {
           lastStopped = 208;
@@ -377,8 +397,18 @@ export class VideoComponent implements OnInit, OnDestroy {
     });
 
     myPlayer.on('ended', () => {
+      myPlayer.exitFullscreen();
       this.videoEnded = true;
-      
+      this.router.navigate(['estadisticas']);
+      sessionStorage.setItem("respuestas", this.correctAnswers.toString())
+      if (this.infoClicks === 0 || this.infoClicks === 1) {
+        sessionStorage.setItem("infoClicks", this.infoClicks.toString())
+      }
+      else{
+        sessionStorage.setItem("infoClicks", (this.infoClicks-1).toString())
+
+      }
+      console.log('video ended', this.videoEnded);
     });
 
   }
@@ -416,13 +446,15 @@ export class VideoComponent implements OnInit, OnDestroy {
   }
 
   questionModalHandler(questionModal: videojs.ModalDialog, correctAnswer: string) {
-    questionModal
-      .contentEl()
-      .querySelectorAll('.btn')
-      .forEach((button) => {
+    let counter = 0;
+    questionModal.contentEl().querySelectorAll('.btn').forEach((button) => {
         button.addEventListener('click', () => {
           button.classList.remove('btn-default');
+          counter++;
           if (button.id === correctAnswer) {
+            if(counter === 1){
+              this.correctAnswers++;
+            }
             this.correctAnswerHandler(button, questionModal);
           } else {
             this.wrongAnswerHandler(button, questionModal);

@@ -10,10 +10,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { VideoComponent } from './video/video.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { AppRoutingModule } from './app-routing.module';
-import { SabiasQueComponent } from './sabias-que/sabias-que.component';
+import { EstadisticaComponent } from './estadistica/estadistica.component';
+import { RatingModule } from 'ngx-bootstrap/rating';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
-  declarations: [AppComponent, VideoComponent, InicioComponent, SabiasQueComponent],
+  declarations: [AppComponent, VideoComponent, InicioComponent, EstadisticaComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -22,6 +25,8 @@ import { SabiasQueComponent } from './sabias-que/sabias-que.component';
     MatIconModule,
     NgbModule,
     AppRoutingModule,
+    RatingModule.forRoot(),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
