@@ -44,6 +44,10 @@ export class VideoComponent implements OnInit, OnDestroy {
         <p>¡Hazme click!</p>
       </button>
     </div>`;
+    botonInfo.addEventListener('click', () => {
+      this.infoClicks++;
+      console.log(this.infoClicks);
+    });
 
     let raspberryBtn = document.createElement('div');
     raspberryBtn.innerHTML = `
@@ -77,8 +81,6 @@ export class VideoComponent implements OnInit, OnDestroy {
           modal = this.createModal(myPlayer, myComponent, CustomModal, content);
 
           botonInfo.addEventListener('click', () => {
-            this.infoClicks++;
-            console.log(this.infoClicks);
             modal.open();
           });
         }
@@ -160,8 +162,6 @@ export class VideoComponent implements OnInit, OnDestroy {
           );
 
           botonInfo.addEventListener('click', () => {
-            this.infoClicks++;
-            console.log(this.infoClicks);
             modal.open();
           });
         }
@@ -324,8 +324,6 @@ export class VideoComponent implements OnInit, OnDestroy {
           );
 
           botonInfo.addEventListener('click', () => {
-            this.infoClicks++;
-            console.log(this.infoClicks);
             modal.open();
           });
         }
@@ -398,17 +396,9 @@ export class VideoComponent implements OnInit, OnDestroy {
 
     myPlayer.on('ended', () => {
       myPlayer.exitFullscreen();
-      this.videoEnded = true;
       this.router.navigate(['estadisticas']);
       sessionStorage.setItem("respuestas", this.correctAnswers.toString())
-      if (this.infoClicks === 0 || this.infoClicks === 1) {
-        sessionStorage.setItem("infoClicks", this.infoClicks.toString())
-      }
-      else{
-        sessionStorage.setItem("infoClicks", (this.infoClicks-1).toString())
-
-      }
-      console.log('video ended', this.videoEnded);
+      sessionStorage.setItem("infoClicks", this.infoClicks.toString())
     });
 
   }

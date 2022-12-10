@@ -19,7 +19,7 @@ export class EstadisticaComponent implements OnInit {
     if (nota===0){
       this.rate = 0
     }
-    else if (nota===1 || nota===2){
+    else if (1<=nota && nota<=2){
       this.rate = 1
     }
     else if (3<=nota && nota<=5){
